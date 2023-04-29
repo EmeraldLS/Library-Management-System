@@ -67,11 +67,12 @@ func GetAllBooks(c *gin.Context) {
 
 func GetABook(c *gin.Context) {
 	bookID := c.Param("book_id")
+	fmt.Println(bookID)
 	book, err := config.GetABook(bookID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"response": "error",
-			"message":  err,
+			"message":  fmt.Sprintf("%v", err),
 		})
 		c.Abort()
 		return

@@ -16,17 +16,17 @@ func GetMaxBookCode() int {
 	defer cancel()
 	filter := bson.M{}
 	findOptions := options.Find().SetSort(bson.M{"book_code": -1}).SetLimit(1)
-	cursor, _ := db.UsersCollection.Find(ctx, filter, findOptions)
+	cursor, _ := db.BooksCollection.Find(ctx, filter, findOptions)
 	defer cursor.Close(ctx)
-	var users []model.User
+	var books []model.Book
 	for cursor.Next(ctx) {
-		var user model.User
-		cursor.Decode(&user)
-		users = append(users, user)
+		var book model.Book
+		cursor.Decode(&book)
+		books = append(books, book)
 	}
 	var maxCode int
-	for _, user := range users {
-		maxCode = user.UserCode
+	for _, user := range books {
+		maxCode = user.BookCode
 	}
 	return maxCode
 }
